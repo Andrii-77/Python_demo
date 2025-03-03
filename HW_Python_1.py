@@ -208,16 +208,6 @@ square(5)
 
 # 3) вывести табличку множення за допомогою цикла while
 
-# def multiplicationtable(numeric):
-#     counter = 1
-#     multiplier = 1
-#     while counter <= 10:
-#         print(f"{multiplier} * {numeric} = {numeric*multiplier}" )
-#         counter+=1
-#         multiplier+=1
-#
-# multiplicationtable(2)
-
 def multiplicationtable():
     multiplier = 1
     while multiplier <= 10:
@@ -230,6 +220,18 @@ def multiplicationtable():
         print()
 multiplicationtable()
 
+
 # 4) переробити це завдання під меню
 
 # Не розумію цього завдання. Що таке меню???
+# Можливо ви це мали на увазі?
+
+def multiplicationtable(numeric):
+    counter = 1
+    multiplier = 1
+    while counter <= 10:
+        print(f"{multiplier} * {numeric} = {numeric*multiplier}" )
+        counter+=1
+        multiplier+=1
+
+multiplicationtable(2)
