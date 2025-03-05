@@ -1,7 +1,6 @@
 # 1)написати функцію на замикання котра буде в собі зберігати список справ, вам потрібно реалізувати два методи:
 # - перший записує в список нову справу
 # - другий повертає всі записи
-from email.utils import decode_rfc2231
 
 
 def notebook():
@@ -18,11 +17,38 @@ def notebook():
 
 
 add_todo, get_all = notebook()
-# print(get_all())
 add_todo('football')
 print(get_all())
 add_todo('tea')
 print(get_all())
+#-------------------------------------------------------------------------------------------------------
+def notebook_mentor():
+    todo_list = []
+
+    def add_todo(todo):
+        nonlocal todo_list
+        todo_list.append(todo)
+
+    def get_all():
+        nonlocal todo_list
+        return todo_list.copy()
+
+    return add_todo, get_all
+
+
+add1, get_all1 = notebook_mentor()
+add2, get_all2 = notebook_mentor()
+
+add1('apple')
+add2('HP')
+add1('go to home')
+
+print(get_all1())
+print('********************************')
+print(get_all2())
+#-------------------------------------------------------------------------
+print('###############################')
+
 
 # 2) протипізувати перше завдання
 
@@ -47,6 +73,35 @@ add_todo('football')
 add_todo('tea')
 add_todo('golf')
 print(get_all())
+#--------------------------------------------------------------------------
+from typing import Callable
+# def notebook_mentor() -> tuple[Callable[[str], None], Callable[[], list[str]]]:
+def notebook_mentor():
+    todo_list: list[str] = []
+
+    def add_todo(todo:str):
+        nonlocal todo_list
+        todo_list.append(todo)
+
+    def get_all() -> list[str]:
+        nonlocal todo_list
+        return todo_list.copy()
+
+    return add_todo, get_all
+
+
+add1, get_all1 = notebook_mentor()
+add2, get_all2 = notebook_mentor()
+
+add1('apple')
+add2('HP')
+add1('go to home')
+
+print(get_all1())
+print('********************************')
+print(get_all2())
+#--------------------------------------------------------------------------
+print('###############################')
 
 
 # 3) створити функцію котра буде повертати сумму розрядів числа у вигляді строки (також використовуемо типізацію)
@@ -69,6 +124,7 @@ def expanded_form(num: int) -> str:
     print(result)
     return result
 
+
 # Якщо не знати join, то можна це прописати трохи інакше:
 #     result = ""
 #     for i in arr:
@@ -81,6 +137,22 @@ def expanded_form(num: int) -> str:
 expanded_form(12)
 expanded_form(42)
 expanded_form(70304)
+#---------------------------------------------------------------------------
+def expanded_form_mentor(num: int) -> str:
+    st = str(num)
+    length = len(st) - 1
+    res = []
+    for i, ch in enumerate(st):
+        if ch != "0":
+            res.append(ch + '0' * (length - i))
+    return ' + '.join(res) + f' = {st}'
+
+
+print(expanded_form_mentor(12))
+print(expanded_form_mentor(42))
+print(expanded_form_mentor(70304))
+#---------------------------------------------------------------------------
+print('###############################')
 
 
 # 4) створити декоратор котрий буде підраховувати скільки разів була запущена функція продекорована цим декоратором,
@@ -94,6 +166,7 @@ def decor(func):
         counter += 1
         print('count: ', counter)
         func()
+
     return inner
 
 
@@ -111,3 +184,31 @@ func1()
 func1()
 func2()
 func1()
+#--------------------------------------------------------------------------
+def count_decor_mentor(func):
+    count = 0
+
+    def inner(*args, **kwargs):
+        nonlocal count
+        count += 1
+        func(*args, **kwargs)
+        print(f'{count=}')
+    return inner
+
+
+@count_decor_mentor
+def func1():
+    print('f1')
+
+
+@count_decor_mentor
+def func2():
+    print('f2')
+
+func1()
+func1()
+func2()
+func1()
+
+#---------------------------------------------------------------------------
+print('###############################')
